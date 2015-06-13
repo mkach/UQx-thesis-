@@ -1,0 +1,43 @@
+import random
+import string
+from datetime import datetime
+from time import *
+from pymongo.connection import Connection
+connection = Connection("localhost")
+
+db = connection.forum
+
+post_visibility = ['true', 'false']
+chars = '1234567890aabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+num = '1234567890'
+
+for _ in range(2):
+	visible = random.choice(post_visibility) 
+	body = (''.join(random.choice(chars) for i in range(150)))
+
+	for i in range(700):
+		doc = [{ "votes" : { "up" : [ ], "down" : [ ], "up_count" : 0, "down_count" : 0, "count" : 0, "point" : 0 }, 
+ 			"visible" : visible, 
+  			"abuse_flaggers" : [ ], 
+  			"historical_abuse_flaggers" : [ ], 
+  			"parent_ids" : [ ], 
+  			"at_position_list" : [ ], 
+  			"body" : body, 
+  			"course_id" : "UQx/Crime101x/3T2014",
+  			"_type" : "comment",
+   			"endorsed": visible,
+   			"anonymous" : visible,
+   			"anonymous_to_peers" : visible,
+   			"author_id" : (''.join(random.choice(num) for i in range(8))),
+   			"comment_id" : (''.join(random.choice(chars) for i in range(25))),
+   			"author_username" : (''.join(random.choice(chars) for i in range(10))),
+   			"sk" : (''.join(random.choice(chars) for i in range(25))),
+  			} for _ in range(350)]
+			
+		for data in doc:			 		
+  			#print data
+  			db.crime.save(data)
+
+connection.close()
+
+
