@@ -1,0 +1,12 @@
+hadoop jar /usr/local/Cellar/hadoop/2.6.0/libexec/share/hadoop/tools/lib/hadoop-streaming-2.6.0.jar 
+-libjars /usr/local/Cellar/hadoop/2.6.0/libexec/share/hadoop/tools/lib/mongo-hadoop-streaming.jar 
+-input /tmp/in -output user/ouput  
+-inputformat com.mongodb.hadoop.mapred.MongoInputFormat 
+-outputformat com.mongodb.hadoop.mapred.MongoOutputFormat 
+-io mongodb -jobconf mongo.input.uri=mongodb://localhost/mongohadoop.crime 
+-jobconf mongo.output.uri=mongodb://localhost/mongohadoop.crime_output 
+-jobconf stream.io.identifier.resolver.class=com.mongodb.hadoop.streaming.io.MongoIdentifierResolver 
+-mapper /Users/pyhadoop/crimeMapper.py 
+-reducer /Users/pyhadoop/crimeReducer.py 
+-file /Users/pyhadoop/crimeMapper.py 
+-file /Users/pyhadoop/crimeReducer.py
